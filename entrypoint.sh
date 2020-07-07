@@ -10,6 +10,7 @@ if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
 	fi
 fi
 
+[[ ! -z ${INPUT_EXCLUDE} ]] && EXCLUDE="${INPUT_EXCLUDE}" || EXCLUDE=""
 [[ ! -z ${INPUT_PASSWORD} ]] && SONAR_PASSWORD="${INPUT_PASSWORD}" || SONAR_PASSWORD=""
 [[ -z ${INPUT_PROJECTKEY} ]] && SONAR_PROJECTKEY="${PWD##*/}" || SONAR_PROJECTKEY="${INPUT_PROJECTKEY}"
 
@@ -21,5 +22,6 @@ sonar-scanner \
 	-Dsonar.password=${INPUT_PASSWORD} \
 	-Dsonar.sources=. \
 	-Dsonar.sourceEncoding=UTF-8 \
+	-Dsonar.exclusions=${INPUT_EXCLUDE} \
 	${SONAR_PASSWORD}
 
